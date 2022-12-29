@@ -1,18 +1,18 @@
-const { book } = require("../models");
+const { user } = require("../models");
 
-class booksController {
-  getAllBooksCtrl = async (req, res, next) => {
+class usersController {
+  getAllUsersCtrl = async (req, res, next) => {
     try {
-      const data = await book.findAll();
+      const data = await user.findAll();
       next({ value: data, message: "OK", statusCode: 200 });
     } catch (error) {
       next(error);
     }
   };
 
-  getBookByIdCtrl = async (req, res, next) => {
+  getUsersByIdCtrl = async (req, res, next) => {
     try {
-      const data = await book.findOne({
+      const data = await user.findOne({
         where: {
           id: req.params.id,
         },
@@ -23,19 +23,13 @@ class booksController {
     }
   };
 
-  insertBookCtrl = async (req, res, next) => {
+  insertUsersCtrl = async (req, res, next) => {
     try {
-      const title = req.body.title;
-      const author = req.body.author;
-      const page = req.body.page;
-      const genre = req.body.genre;
-      const description = req.body.description;
-      const data = await book.create({
-        title: title,
-        author: author,
-        page: page,
-        genre: genre,
-        description: description,
+      const name = req.body.name;
+      const age = req.body.age;
+      const data = await user.create({
+        name: name,
+        age: age,
       });
       next({ value: data, message: "OK", statusCode: 200 });
     } catch (error) {
@@ -43,18 +37,18 @@ class booksController {
     }
   };
 
-  updateBookByIdCtrl = async (req, res, next) => {
+  updateUsersByIdCtrl = async (req, res, next) => {
     try {
-      const data = await book.findOne({
+      const data = await user.findOne({
         where: {
           id: req.params.id,
         },
       });
       if (data) {
-        const update = await book.update(
+        const update = await user.update(
           {
-            title: req.body.title,
-            author: req.body.author,
+            name: req.body.name,
+            age: req.body.age,
           },
           {
             where: { id: data.id },
@@ -75,15 +69,15 @@ class booksController {
     }
   };
 
-  deleteBookByIdCtrl = async (req, res, next) => {
+  deleteUsersByIdCtrl = async (req, res, next) => {
     try {
-      const data = await book.findOne({
+      const data = await user.findOne({
         where: {
           id: req.params.id,
         },
       });
       if (data) {
-        const hapus = await book.destroy({
+        const hapus = await user.destroy({
           where: { id: data.id },
         });
       }
@@ -102,4 +96,4 @@ class booksController {
   };
 }
 
-module.exports = new booksController();
+module.exports = new usersController();
